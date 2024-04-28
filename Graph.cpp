@@ -1,56 +1,55 @@
-#include <iostream>
-#include <vector>
+#include "Graph.hpp" // Include the header file
 
-class Graph {
-private:
-    std::vector<std::vector<int>> adjMatrix;
-    int numVertices;
-    int numEdges;
+namespace ariel {
 
-public:
-    // Constructor
-    Graph(int vertices) : numVertices(vertices), numEdges(0) {
-        adjMatrix.resize(vertices, std::vector<int>(vertices, 0));
+// Constructor
+Graph::Graph() : numOfEdges(0), numOfVertices(0) {
+    // Initialize vec with an empty vector
+    vec = std::vector<std::vector<int>>();
+}
+
+// Load graph from a 2D vector
+void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
+    //might won't work  cause we never intilized numOfVertices
+    if (!vec1.empty() &&  vec1.size() != vec1[0].size()) { // means that this is not a square matrix
+        std::cout << "Error: The input matrix does not match the number of vertices." << std::endl;
+        return;
     }
-
-    // Load graph from a 2D vector
-    void loadGraph(const std::vector<std::vector<int>>& vec) {
-        if (vec.size() != numVertices || vec[0].size() != numVertices) {
-            std::cout << "Error: The input matrix does not match the number of vertices." << std::endl;
-            return;
-        }
-        adjMatrix = vec;
-        for (int i = 0; i < numVertices; ++i) {
-            for (int j = 0; j < numVertices; ++j) {
-                if (adjMatrix[i][j] == 1) {
-                    numEdges++;
-                }
+    vec = vec1;
+    numOfVertices = vec1.size();
+    numOfEdges = 0; // Reset numOfEdges before counting
+    for (size_t i = 0; i < numOfVertices; ++i) {
+        for (size_t j = 0; j < numOfVertices; ++j) {
+            if (vec[i][j] == 1) {
+                numOfEdges++;
             }
         }
     }
+}
 
-    // Print the graph
-    void printGraph() {
-        for (int i = 0; i < numVertices; ++i) {
-            for (int j = 0; j < numVertices; ++j) {
-                std::cout << adjMatrix[i][j] << " ";
-            }
-            std::cout << std::endl;
+// Print the graph
+void Graph::printGraph() {
+    for (size_t i = 0; i < numOfVertices; ++i) {
+        for (size_t j = 0; j < numOfVertices; ++j) {
+            std::cout << vec[i][j] << " ";
         }
+        std::cout << std::endl;
     }
+}
 
-    // Get the number of vertices
-    int getVertices() {
-        return numVertices;
-    }
+// Get the number of vertices
+size_t Graph::getVertices() {
+    return (size_t)numOfVertices;
+}
 
-    // Get the number of edges
-    int getEdges() {
-        return numEdges;
-    }
+// Get the number of edges
+size_t Graph::getEdges() {
+    return (size_t)numOfEdges;
+}
 
-    // Get the graph
-    std::vector<std::vector<int>> getGraph() {
-        return adjMatrix;
-    }
-};
+// Get the graph
+std::vector<std::vector<int>> Graph::getGraph() {
+    return vec;
+}
+
+} // namespace ariel
