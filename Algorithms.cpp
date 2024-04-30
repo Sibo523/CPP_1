@@ -42,6 +42,7 @@ namespace ariel
         }
 
         // 5. If all vertices are visited, the graph is connected
+        std::cout<<"true"<<std::endl;
         return 1;
     }
     // Function to check if a graph contains a cycle (uses DFS)
@@ -109,9 +110,7 @@ namespace ariel
     // Function to find the shortest path between two vertices (Dijkstra's algorithm)
     std::string Algorithms::shortestPath(Graph g, int des, int src)
     {
-        // Implement Dijkstra's algorithm to find the shortest path
-        // Return a string representation of the path (or an error message)
-        // (Implementation details omitted for brevity)
+
         return " ";
     }
 

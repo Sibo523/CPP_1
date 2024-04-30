@@ -12,7 +12,7 @@ Graph::Graph() : numOfEdges(0), numOfVertices(0) {
 void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
     //might won't work  cause we never intilized numOfVertices
     if (!vec1.empty() &&  vec1.size() != vec1[0].size()) { // means that this is not a square matrix
-        std::cout << "Error: The input matrix does not match the number of vertices." << std::endl;
+        std::cout << "Invalid graph: The graph is not a square matrix." << std::endl;
         return;
     }
     vec = vec1;
