@@ -10,15 +10,12 @@ namespace ariel {
             static int isConnected(Graph g);
             static void dfs(Graph g, std::vector<bool> &visited, size_t vertex);
             static bool isContainsCycle(Graph g);
-            static bool dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<bool> &recStack, size_t vertex);
-            static std::string shortestPath(Graph g, int des, int src);
+            static bool dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex);
+            static std::string shortestPath(Graph g, size_t des, size_t src);
             static std::string isBipartite(Graph g);
             static bool negativeCycle(Graph g); 
-            static bool isPath(std::vector<std::vector<int>> edges,unsigned long src,int des);
-            static bool isPathHelp(std::vector<std::vector<int>> edges,unsigned long src,int des,std::vector<bool> visited);
-            
-            // static bool isContainsCycleUtil(Graph g, unsigned long v, std::vector<bool>& visited, std::vector<bool>& recStack);
-            // static void printCycle(Graph g, unsigned long start, int end);
+        private:
+            static std::string BelmanFord(Graph g, size_t srcm, size_t des);
 
     };
 }
