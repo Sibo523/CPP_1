@@ -48,48 +48,47 @@ namespace ariel
         std::cout<<"true ";
         return 1;
     }
-    
-    bool Algorithms::dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex)
+    bool Algorithms::dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent)
+{
+    // std::cout << "Visiting vertex: " << vertex << std::endl;
+    visited[vertex] = true;
+    recStack[vertex] = true;
+
+    for (size_t neighbor = 0; neighbor < g.getVertices(); neighbor++)
     {
-        // std::cout<<"Eima shel elian hamooda"<<std::endl;
-        // Mark current vertex as visited and in recursion stack
-        visited[vertex] = true;
-        recStack[vertex] = true; // when we visit a vertex, we set it to true when we go up in the stack list become false again
-        // Iterate through all neighbors of the current vertex
-        for (size_t neighbor = 0; neighbor < g.getVertices(); neighbor++)
-        {        
-            if(g.isDirected && vertex == neighbor)
+        if (!g.isDirected() && parent == neighbor)
+        {
+            // std::cout << "Skipping parent in undirected graph: " << neighbor << std::endl;
+            continue;
+        }
+
+        if (g.getGraph()[vertex][neighbor] != 0 && !visited[neighbor])
+        {
+            // std::cout << "Recursing to neighbor: " << neighbor << std::endl;
+            if (dfsCycleHelper(g, visited, recStack, neighbor, vertex))
             {
-                continue;
-            }
-            // If there's an edge to an unvisited neighbor, go to it 
-            if (g.getGraph()[vertex][neighbor] != 0 && !visited[neighbor])
-            {
-                
-                if (dfsCycleHelper(g, visited, recStack, neighbor))
-                {
-                    // std::cout<<"Eima shel elian zona"<<std::endl;
-                    return true; // Cycle found in recursive exploration
-                }
-            }
-            else if (recStack[neighbor])
-            { // Back edge detected (cycle)
+                // std::cout << "Cycle detected from vertex: " << vertex << std::endl;
                 return true;
             }
         }
-
-        // Unset recursion stack flag for the current vertex (backtracking)
-        recStack[vertex] = false;
-
-        // No cycle found in this branch of DFS, return false
-        return false;
+        else if (vertex != parent && neighbor != vertex && recStack[neighbor] && g.getGraph()[vertex][neighbor] != 0)
+        {
+            std::cout << "Cycle detected: " << vertex << " -> " << neighbor << std::endl;
+            return true;
+        }
     }
-    bool Algorithms::isContainsCycle(Graph g)
+
+    recStack[vertex] = false;
+    // std::cout << "Backtracking from vertex: " << vertex << std::endl;
+    return false;
+}
+
+    
+        bool Algorithms::isContainsCycle(Graph g)
     {
         // 1. Create a visited vector to keep track of visited nodes
         std::vector<bool> visited(g.getVertices(), false);
         // 2. Create a recStack vector to keep track of nodes in the current recursion path
-        std::vector<int> recStack(g.getVertices(), false);
 
         // 3. Iterate through all vertices
         for (size_t vertex = 0; vertex < g.getVertices(); ++vertex)
@@ -97,7 +96,8 @@ namespace ariel
             // 4. If the vertex is not visited, call DFS helper function
             if (!visited[vertex])
             {
-                if (dfsCycleHelper(g, visited, recStack, vertex))
+                std::vector<int> recStack(g.getVertices(), false);
+                if (dfsCycleHelper(g, visited, recStack, vertex,(size_t)-1))
                 {
                     std::cout<<"true contains cycle";
                     return true; // Cycle found found a back edge

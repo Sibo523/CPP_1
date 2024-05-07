@@ -10,7 +10,7 @@ namespace ariel {
             static int isConnected(Graph g);
             static void dfs(Graph g, std::vector<bool> &visited, size_t vertex);
             static bool isContainsCycle(Graph g);
-            static bool dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex);
+            static bool dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertexm, size_t parent);
             static std::string shortestPath(Graph g, size_t des, size_t src);
             static std::string isBipartite(Graph g);
             static bool negativeCycle(Graph g); 
