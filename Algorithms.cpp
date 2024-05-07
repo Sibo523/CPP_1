@@ -58,9 +58,14 @@ namespace ariel
         // Iterate through all neighbors of the current vertex
         for (size_t neighbor = 0; neighbor < g.getVertices(); neighbor++)
         {        
+            if(g.isDirected && vertex == neighbor)
+            {
+                continue;
+            }
             // If there's an edge to an unvisited neighbor, go to it 
             if (g.getGraph()[vertex][neighbor] != 0 && !visited[neighbor])
             {
+                
                 if (dfsCycleHelper(g, visited, recStack, neighbor))
                 {
                     // std::cout<<"Eima shel elian zona"<<std::endl;
@@ -142,14 +147,15 @@ namespace ariel
         }
 
         // 5. Return the shortest path from the source vertex to all other vertices
-        std::string result = "Shortest path from vertex " + std::to_string(src) + "to vertex "+std::to_string(des)+std::to_string(dist[des])+"\n";
+        // std::string result = "Shortest path from vertex " + std::to_string(src) + "to vertex "+std::to_string(des)+std::to_string(dist[des])+"\n";
+        std::string result = "";
         if (dist[des] == INT_MAX)
         {
-            return "No path from " + std::to_string(src) + " to " + std::to_string(des);
+            return "-1";
         }
         while (des!=src)
         {
-            result += std::to_string(des) + " -> ";
+            result += std::to_string(des) + "->";
             des = (size_t)parent[des];
             
         }

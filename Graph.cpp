@@ -3,7 +3,7 @@
 namespace ariel {
 
 // Constructor
-Graph::Graph() : numOfEdges(0), numOfVertices(0) {
+Graph::Graph() : numOfEdges(0), numOfVertices(0), directed(false) {
     // Initialize vec with an empty vector
     vec = std::vector<std::vector<int>>();
 }
@@ -25,6 +25,15 @@ void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
             }
         }
     }
+    // check if it's exactly semtric if so then it's undirected
+    for (size_t i = 0; i < numOfVertices; ++i) {
+        for (size_t j = 0; j < numOfVertices; ++j) {
+            if (vec[i][j] != vec[j][i]) {
+                directed = true;
+                return;
+            }
+        }
+    }
 }
 
 // Print the graph
@@ -35,6 +44,7 @@ void Graph::printGraph() {
         }
         std::cout << std::endl;
     }
+    std::cout<<"Graph with "<<numOfVertices<<" vertices and "<<numOfEdges<<" edges."<<std::endl;
 }
 
 // Get the number of vertices
@@ -51,5 +61,7 @@ size_t Graph::getEdges() {
 std::vector<std::vector<int>> Graph::getGraph() {
     return vec;
 }
-
+bool Graph::isDirected(){
+    return directed;
+}
 } // namespace ariel

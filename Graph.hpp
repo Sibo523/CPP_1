@@ -9,6 +9,7 @@ class Graph{
         int numOfEdges;
         std::vector<std::vector<int>> vec;
         int numOfVertices;
+        bool directed;
     public:
         Graph();
         void loadGraph(std::vector<std::vector<int>> vec1);
@@ -16,7 +17,7 @@ class Graph{
         size_t getVertices();
         size_t getEdges();
         std::vector<std::vector<int>> getGraph();
-
+        bool isDirected();
 };
 }
 #endif //GRAPH_H
