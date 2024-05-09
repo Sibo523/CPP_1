@@ -67,19 +67,20 @@ namespace ariel
             // std::cout << "Recursing to neighbor: " << neighbor << std::endl;
             if (dfsCycleHelper(g, visited, recStack, neighbor, vertex))
             {
-                // std::cout << "Cycle detected from vertex: " << vertex << std::endl;
+                std::cout << "Cycle detected from vertex: " << vertex << std::endl;
                 return true;
             }
         }
-        else if (vertex != parent && neighbor != vertex && recStack[neighbor] && g.getGraph()[vertex][neighbor] != 0)
+        else if ( neighbor != vertex && recStack[neighbor] && g.getGraph()[vertex][neighbor] != 0) // if the neighbor is not the parent and it's in the recStack
         {
-            std::cout << "Cycle detected: " << vertex << " -> " << neighbor << std::endl;
-            return true;
+            if (g.isDirected() || (!g.isDirected() && parent != neighbor)){ // if it's directed or if it's undirected and the neighbor is not the parent
+                std::cout << "Cycle detected: " << vertex << " -> " << neighbor << std::endl;
+                return true;
+            }
         }
     }
-
     recStack[vertex] = false;
-    // std::cout << "Backtracking from vertex: " << vertex << std::endl;
+    std::cout << "Backtracking from vertex: " << vertex << std::endl;
     return false;
 }
 
@@ -217,9 +218,28 @@ namespace ariel
                 }
             }
         }
-
+        //this is A
+        std::cout<<"A={";
+        for (size_t i = 0; i < V; i++)
+        {
+            if (colorArr[i]==0)
+            {
+                std::cout<<i<<" ";
+            }
+            
+        }
+        //this is B
+        std::cout<<"}, B={";
+        for(size_t i = 0; i < V; i++)
+        {
+            if(colorArr[i]==1)
+            {
+                std::cout<<i<<" ";
+            }
+        }
+        std::cout<<"}"<<std::endl;
         // If we reach here, then all vertices can be colored with alternate color
-        return "Yes";
+        return "Yes it's bipartite";
     }
 
     // Function to check for a negative cycle in a weighted graph (Bellman-Ford)
