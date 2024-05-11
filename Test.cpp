@@ -70,7 +70,7 @@ TEST_CASE("Test isBipartite")
         {1, 0, 1},
         {0, 1, 0}};
     g.loadGraph(graph);
-    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2}, B={1}");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={1 }, B={0 2 }");
 
     vector<vector<int>> graph2 = {
         {0, 1, 1, 0, 0},
@@ -83,12 +83,12 @@ TEST_CASE("Test isBipartite")
 
     vector<vector<int>> graph3 = {
         {0, 1, 2, 0, 0},
-        {1, 0, 3, 0, 0},
-        {2, 3, 0, 4, 0},
+        {1, 0, 0, 0, 0},
+        {2, 0, 0, 4, 0},
         {0, 0, 4, 0, 5},
         {0, 0, 0, 5, 0}};
     g.loadGraph(graph3);
-    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}");
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={1 2 4 }, B={0 3 }");
 }
 TEST_CASE("Test invalid graph")
 {

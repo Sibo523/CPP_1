@@ -22,6 +22,19 @@ namespace ariel
             }
         }
     }
+    void Algorithms::makeSymmetric(Graph &g)
+    {
+        for (size_t i = 0; i < g.getVertices(); ++i)
+        {
+            for (size_t j = 0; j < g.getVertices(); ++j)
+            {
+                if (g.getGraph()[i][j] != g.getGraph()[j][i])
+                {
+                    g.getGraph()[i][j] = g.getGraph()[j][i] = 1;
+                }
+            }
+        }
+    }
 
     int Algorithms::isConnected(Graph g)
     {
@@ -32,60 +45,62 @@ namespace ariel
         size_t start = 0;
 
         // 3. Perform DFS traversal starting from the chosen vertex
-        dfs(g, visited, start);
+        // we will see that g is sent by value
+        makeSymmetric(g);       // now we have symmetring graph so when we will do dfs if the graph is connected we will get to everyone else not
+        dfs(g, visited, start); // we will dfs, if we can reach all the vertices then the graph is connected
 
         // 4. Check if all vertices are marked visited
         for (size_t i = 0; i < visited.size(); i++)
         {
-            if (visited[i] == false)
+            if (visited[i] == false) // if one of them is false then the graph is not connected
             {
-                std::cout<<"false ";
-                return 0; // Not connected if some vertex is false
+                std::cout << "false ";
+                return 0;
             }
         }
 
         // 5. If all vertices are visited, the graph is connected
-        std::cout<<"true ";
+        std::cout << "true ";
         return 1;
     }
     bool Algorithms::dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent)
-{
-    // std::cout << "Visiting vertex: " << vertex << std::endl;
-    visited[vertex] = true;
-    recStack[vertex] = true;
-
-    for (size_t neighbor = 0; neighbor < g.getVertices(); neighbor++)
     {
-        if (!g.isDirected() && parent == neighbor)
-        {
-            // std::cout << "Skipping parent in undirected graph: " << neighbor << std::endl;
-            continue;
-        }
+        // std::cout << "Visiting vertex: " << vertex << std::endl;
+        visited[vertex] = true;
+        recStack[vertex] = true;
 
-        if (g.getGraph()[vertex][neighbor] != 0 && !visited[neighbor])
+        for (size_t neighbor = 0; neighbor < g.getVertices(); neighbor++)
         {
-            // std::cout << "Recursing to neighbor: " << neighbor << std::endl;
-            if (dfsCycleHelper(g, visited, recStack, neighbor, vertex))
+            if (!g.isDirected() && parent == neighbor)
             {
-                std::cout << "Cycle detected from vertex: " << vertex << std::endl;
-                return true;
+                // std::cout << "Skipping parent in undirected graph: " << neighbor << std::endl;
+                continue;
             }
-        }
-        else if ( neighbor != vertex && recStack[neighbor] && g.getGraph()[vertex][neighbor] != 0) // if the neighbor is not the parent and it's in the recStack
-        {
-            if (g.isDirected() || (!g.isDirected() && parent != neighbor)){ // if it's directed or if it's undirected and the neighbor is not the parent
-                std::cout << "Cycle detected: " << vertex << " -> " << neighbor << std::endl;
-                return true;
-            }
-        }
-    }
-    recStack[vertex] = false;
-    std::cout << "Backtracking from vertex: " << vertex << std::endl;
-    return false;
-}
 
-    
-        bool Algorithms::isContainsCycle(Graph g)
+            if (g.getGraph()[vertex][neighbor] != 0 && !visited[neighbor])
+            {
+                // std::cout << "Recursing to neighbor: " << neighbor << std::endl;
+                if (dfsCycleHelper(g, visited, recStack, neighbor, vertex))
+                {
+                    std::cout << "Cycle detected from vertex: " << vertex << std::endl;
+                    return true;
+                }
+            }
+            else if (neighbor != vertex && recStack[neighbor] && g.getGraph()[vertex][neighbor] != 0) // if the neighbor is not the parent and it's in the recStack
+            {
+                if (g.isDirected() || (!g.isDirected() && parent != neighbor))
+                { // if it's directed or if it's undirected and the neighbor is not the parent
+                    std::cout << "Cycle detected: " << vertex << " -> " << neighbor << std::endl;
+                    return true;
+                }
+            }
+        }
+        recStack[vertex] = false;
+        // std::cout << "Backtracking from vertex: " << vertex << std::endl; // used for debugging
+        return false;
+    }
+
+    bool Algorithms::isContainsCycle(Graph g)
     {
         // 1. Create a visited vector to keep track of visited nodes
         std::vector<bool> visited(g.getVertices(), false);
@@ -98,19 +113,19 @@ namespace ariel
             if (!visited[vertex])
             {
                 std::vector<int> recStack(g.getVertices(), false);
-                if (dfsCycleHelper(g, visited, recStack, vertex,(size_t)-1))
+                if (dfsCycleHelper(g, visited, recStack, vertex, (size_t)-1))
                 {
-                    std::cout<<"true contains cycle";
+                    std::cout << "true contains cycle";
                     return true; // Cycle found found a back edge
                 }
             }
         }
         // 5. If no cycle found after iterating through all vertices, return false
-        std::cout<<"false doesn't contain cycle";
+        std::cout << "false doesn't contain cycle";
         return false;
     }
 
-    std::string Algorithms::BelmanFord(Graph g, size_t src,size_t des)
+    std::string Algorithms::BelmanFord(Graph g, size_t src, size_t des)
     {
         // 1. Create a vector to store the shortest distances from the source vertex
         std::vector<int> dist(g.getVertices(), INT_MAX);
@@ -154,30 +169,29 @@ namespace ariel
         {
             return "-1";
         }
-        while (des!=src)
+        while (des != src)
         {
             result += std::to_string(des) + "->";
             des = (size_t)parent[des];
-            
         }
-        
 
-        return result+std::to_string(src);
+        return result + std::to_string(src);
     }
-   
+
     // Function to find the shortest path between two vertices (Dijkstra's algorithm)
     std::string Algorithms::shortestPath(Graph g, size_t des, size_t src)
     {
 
-        return BelmanFord(g, src,des);
+        return BelmanFord(g, src, des);
     }
 
     // Function to check if a graph is bipartite (uses BFS)
     std::string Algorithms::isBipartite(Graph g)
     {
-        size_t V = g.getVertices();
-        // Create a color array to store colors assigned to vertices. 
-        // Initialize all vertices as not colored (-1). 
+        size_t V = g.getVertices(); // amount of vertirces 
+
+        // Create a color array to store colors assigned to vertices.
+        // Initialize all vertices as not colored (-1).
         std::vector<int> colorArr(V, -1);
 
         // Process all vertices one by one
@@ -186,25 +200,25 @@ namespace ariel
             // If vertex is not colored, apply BFS on it.
             if (colorArr[i] == -1)
             {
-                std::queue <size_t> q;
+                std::queue<size_t> q;
                 q.push(i);
                 colorArr[i] = 1; // Color first vertex as 1.
 
                 // Run while there are vertices in queue
                 while (!q.empty())
                 {
-                    size_t u = q.front();
+                    size_t u = q.front(); // sad that I can't pop into u :(
                     q.pop();
 
-                    // Return false if there is a self-loop 
-                    if (g.getGraph()[u][u] == 1)
-                        return "No";
-
+                    // Return false if there is a self-loop
+                    if (g.getGraph()[u][u] != 0) {
+                        return "0";
+                    }
                     // Find all non-colored adjacent vertices
                     for (size_t v = 0; v < V; ++v)
                     {
                         // An edge from u to v exists and destination v is not colored
-                        if (g.getGraph()[u][v] && colorArr[v] == -1)
+                        if (g.getGraph()[u][v] != 0 && colorArr[v] == -1)
                         {
                             // Assign alternate color to this adjacent v of u
                             colorArr[v] = 1 - colorArr[u];
@@ -212,42 +226,45 @@ namespace ariel
                         }
 
                         // An edge from u to v exists and destination v is colored with same color as u
-                        else if (g.getGraph()[u][v] && colorArr[v] == colorArr[u])
-                            return "No";
+                        else if (g.getGraph()[u][v] !=0 && colorArr[v] == colorArr[u])
+                        {
+                            std::cout<<"man"<<u<<"bruh"<<v<<"\n";
+                            return "0";
+                        }
+                         
                     }
                 }
             }
         }
-        //this is A
-        std::cout<<"A={";
+        // this is A
+        std::string result= "The graph is bipartite: ";
+        result += "A={";
         for (size_t i = 0; i < V; i++)
         {
-            if (colorArr[i]==0)
+            if (colorArr[i] == 0)
             {
-                std::cout<<i<<" ";
+                result += std::to_string(i) + " ";
             }
-            
         }
-        //this is B
-        std::cout<<"}, B={";
-        for(size_t i = 0; i < V; i++)
+        // this is B
+        result += "}, B={";
+        for (size_t i = 0; i < V; i++)
         {
-            if(colorArr[i]==1)
+            if (colorArr[i] == 1)
             {
-                std::cout<<i<<" ";
+                result += std::to_string(i) + " ";
             }
         }
-        std::cout<<"}"<<std::endl;
+        result += "}";
         // If we reach here, then all vertices can be colored with alternate color
-        return "Yes it's bipartite";
+        return result;
     }
 
     // Function to check for a negative cycle in a weighted graph (Bellman-Ford)
     bool Algorithms::negativeCycle(Graph g)
     {
-        
-        return BelmanFord(g, 0,0) == "Graph contains negative weight cycle";
-    }
 
+        return BelmanFord(g, 0, 0) == "Graph contains negative weight cycle";
+    }
 
 } // namespace ariel

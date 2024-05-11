@@ -13,7 +13,9 @@ Graph::Graph() : numOfEdges(0), numOfVertices(0), directed(false) {
 void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
     //might won't work  cause we never intilized numOfVertices
     if (!vec1.empty() &&  vec1.size() != vec1[0].size()) { // means that this is not a square matrix
-        std::cout << "Invalid graph: The graph is not a square matrix." << std::endl;
+        
+        throw std::invalid_argument("Invalid graph: The graph is not a square matrix." );
+
         return;
     }
     vec = vec1;
@@ -21,7 +23,7 @@ void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
     numOfEdges = 0; // Reset numOfEdges before counting
     for (size_t i = 0; i < numOfVertices; ++i) {
         for (size_t j = 0; j < numOfVertices; ++j) {
-            if (vec[i][j] == 1) {
+            if (vec[i][j] != 0) {
                 numOfEdges++;
             }
         }
@@ -35,6 +37,7 @@ void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
             }
         }
     }
+    numOfEdges /= 2; // Divide by 2 because the graph is undirected
 }
 
 // Print the graph
