@@ -143,6 +143,6 @@ This example demonstrates creating a directed graph with 4 vertices and 4 edges,
 
 The `Graph` class provides a solid foundation for graph-based algorithms and data structures, making it easy to implement complex graph operations and algorithms.
 
-### `P.S:I got help for phind to create this readme`
+### `P.S:I got help from phind to create this readme`
  
 
