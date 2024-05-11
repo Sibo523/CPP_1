@@ -38,6 +38,11 @@ namespace ariel
 
     int Algorithms::isConnected(Graph g)
     {
+        size_t V = g.getVertices(); // amount of vertirces 
+        if (V == 0) {
+            return false;
+        }
+        
         // 1. Create a visited vector to keep track of visited nodes
         std::vector<bool> visited((size_t)g.getVertices(), false);
 
@@ -130,6 +135,11 @@ namespace ariel
 
     std::string Algorithms::BelmanFord(const Graph &g, size_t src, size_t des)
     {
+        size_t V = g.getVertices(); // amount of vertirces 
+        if (V == 0) {
+            return "Empty graph";
+        }
+        
         // 1. Create a vector to store the shortest distances from the source vertex
         std::vector<int> dist(g.getVertices(), INT_MAX);
         std::vector<int> parent(g.getVertices(), -1);
@@ -191,7 +201,9 @@ namespace ariel
     std::string Algorithms::isBipartite(Graph g)
     {
         size_t V = g.getVertices(); // amount of vertirces 
-
+        if (V == 0) {
+            return "The graph is bipartite: A={}, B={}";
+        }
         // Create a color array to store colors assigned to vertices.
         // Initialize all vertices as not colored (-1).
         std::vector<int> colorArr(V, -1);
