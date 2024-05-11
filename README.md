@@ -1,29 +1,51 @@
-# מטלה 1 - גרפים (Classes and Namespaces)
+Ariel Algorithms Header File
+This header file defines the Algorithms class within the ariel namespace, providing a collection of static methods for graph-related operations. The class is designed to work with the Graph class, which should be defined elsewhere in your project. The Algorithms class offers functionalities such as checking if a graph is connected, detecting cycles, finding the shortest path between nodes, determining if a graph is bipartite, and identifying negative cycles.
 
-המטרה שלכם במטלה הזאת היא ליצור מחלקה שמייצגת גרף ולממש אלגוריתמים על הגרפים (זה הזמן להזכר בקורס אלגוריתמים 1).
-
-במטלה הזאת הייצוג של הגרף שלכם יתבצע בעזרת מטריצת שכנויות - https://he.wikipedia.org/wiki/%D7%9E%D7%98%D7%A8%D7%99%D7%A6%D7%AA_%D7%A9%D7%9B%D7%A0%D7%95%D7%AA.
-
-הגרף יכול להיות גרף מכוון ולא מכוון וגם גרף ממושקל. מטריצת השכנויות חייבת להיות מטריצה ריבועית.
-
-עליכם לכתוב את הקבצים הבאים:
-
-```
-Graph.cpp
-Algorithms.cpp
-```
-
-הקובץ `Graph.cpp` מכיל מחלקה המייצגת גרף.
-המחלקה מכילה את הפעולות `loadGraph` המקבלת מטריצת שכנויות וטוענת אותה לתוך הגרף ו-`printGraph` שמדפיסה את הייצוג של הגרף (הפורמט לבחירתכם, ראו דוגמה ב-`Demo.cpp`).
-
-הקובץ `Algorithms.cpp` מכיל מימושים לאלגוריתמים על גרפים. ביניהם:
-
-- `isConnected(g)` - האלגוריתם מקבל גרף ומחזיר 1 אם הגרף קשיר (אחרת מחזיר 0).
-- `shortestPath(g,start,end)` - האלגוריתם מקבל גרף, קודקוד התחלה וקודקוד סיום ומחזיר את המסלול הקל ביותר (במקרה שהגרף לא ממושקל - הקצר ביותר) בין שני הקודקודים. במידה ואין מסלול כזה, האלגוריתם יחזיר -1.
-- `isContainsCycle(g)` - האלגוריתם מקבל גרף ומדפיס מעגל כלשהו. אם לא קיים מעגל בגרף, האלגוריתם יחזיר 0.
-- `isBipartite(g)` - האלגוריתם מקבל גרף ומחזיר את החלוקה של הגרף לגרף דו-צדדי. אם אי אפשר לחלק את הגרף, האלגוריתם יחזיר 0.
-- `negativeCycle(g)` - האלגוריתם מקבל גרף ומוצא מעגל שלילי (כלומר מעגל שסכום המשקלים של הצלעות שלילי). אם לא קיים מעגל כזה, האלגוריתם ידפיס שלא קיים מעגל שלילי.
-
-הקובץ `Demo.cpp` מכיל דוגמאות של קלטים ופלטים.
-עליכם לכתוב בתחילת כל קובץ את מספר תעודת הזהות שלכם ואת המייל. כמו כן, בנוסף לקבצים של המטלה אתם נדרשים להגיש גם קובץ README המתאר את אופן המימוש ואת החלוקה שביצעתם בקוד (סוג של מדריך משתמש). אי עמידה בהנחיות תגרור הפחתה בציון. בהצלחה!
-  
+Public Methods
+isConnected(Graph g)
+Description: Checks if the given graph g is connected.
+Return Type: int
+Parameters: A reference to a Graph object g.
+Usage: To determine if all nodes in the graph are reachable from each other.
+isContainsCycle(const Graph &g)
+Description: Determines if the graph g contains a cycle.
+Return Type: bool
+Parameters: A constant reference to a Graph object g.
+Usage: To check for the presence of a cycle in the graph.
+shortestPath(Graph g, size_t des, size_t src)
+Description: Finds the shortest path between the source node src and the destination node des in the graph g.
+Return Type: std::string
+Parameters: A Graph object g, and two size_t values representing the source and destination nodes.
+Usage: To find the shortest path between two nodes in the graph.
+isBipartite(Graph g)
+Description: Checks if the graph g is bipartite.
+Return Type: std::string
+Parameters: A Graph object g.
+Usage: To determine if the graph can be divided into two disjoint sets where every edge connects a node in one set to a node in the other set.
+negativeCycle(Graph g)
+Description: Identifies if the graph g contains a negative cycle.
+Return Type: bool
+Parameters: A Graph object g.
+Usage: To detect the presence of a negative cycle in the graph.
+Private Methods
+dfsCycleHelper(const Graph &g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent, std::string &result)
+Description: Helper method for depth-first search (DFS) to detect cycles.
+Return Type: bool
+Parameters: A constant reference to a Graph object g, vectors for visited nodes and recursion stack, a vertex, a parent vertex, and a result string.
+Usage: Internally used by isContainsCycle to perform DFS and detect cycles.
+dfs(const Graph &g, std::vector<bool> &visited, size_t vertex)
+Description: Depth-first search traversal of the graph g.
+Return Type: void
+Parameters: A constant reference to a Graph object g, a vector for visited nodes, and a vertex.
+Usage: Used internally for various graph traversal needs.
+makeSymmetric(Graph &g)
+Description: Makes the graph g symmetric by adding missing edges.
+Return Type: void
+Parameters: A reference to a Graph object g.
+Usage: Ensures that the graph is fully connected by adding any missing edges.
+BelmanFord(const Graph &g, size_t srcm, size_t des)
+Description: Implements the Bellman-Ford algorithm to find the shortest path between srcm and des in the graph g.
+Return Type: std::string
+Parameters: A constant reference to a Graph object g, and two size_t values representing the source and destination nodes.
+Usage: To find the shortest path between two nodes using the Bellman-Ford algorithm.
+This README provides a high-level overview of the Algorithms class and its methods. For detailed implementation and usage examples, refer to the corresponding source code and documentation within your project.
