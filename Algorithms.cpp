@@ -63,7 +63,7 @@ namespace ariel
         std::cout << "true ";
         return 1;
     }
-    bool Algorithms::dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent)
+    bool Algorithms::dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent, std::string &result)
     {
         // std::cout << "Visiting vertex: " << vertex << std::endl;
         visited[vertex] = true;
@@ -80,17 +80,19 @@ namespace ariel
             if (g.getGraph()[vertex][neighbor] != 0 && !visited[neighbor])
             {
                 // std::cout << "Recursing to neighbor: " << neighbor << std::endl;
-                if (dfsCycleHelper(g, visited, recStack, neighbor, vertex))
+                if (dfsCycleHelper(g, visited, recStack, neighbor, vertex,result))
                 {
-                    std::cout << "Cycle detected from vertex: " << vertex << std::endl;
+                    // std::cout<<vertex;
+                    result +=  " <- " + std::to_string(vertex) ;
                     return true;
                 }
             }
-            else if (neighbor != vertex && recStack[neighbor] && g.getGraph()[vertex][neighbor] != 0) // if the neighbor is not the parent and it's in the recStack
+            else if (neighbor != vertex && recStack[neighbor] && g.getGraph()[vertex][neighbor] != 0) // if the neighbor is not the parent and is in the recStack
             {
-                if (g.isDirected() || (!g.isDirected() && parent != neighbor))
+                if (g.isDirected() || (!g.isDirected() && parent != neighbor)) // can't complete cycle with my parent if I am undirected
                 { // if it's directed or if it's undirected and the neighbor is not the parent
-                    std::cout << "Cycle detected: " << vertex << " -> " << neighbor << std::endl;
+
+                    result += std::to_string(neighbor) + + " <- " +std::to_string(vertex)  ;
                     return true;
                 }
             }
@@ -104,6 +106,7 @@ namespace ariel
     {
         // 1. Create a visited vector to keep track of visited nodes
         std::vector<bool> visited(g.getVertices(), false);
+        std::string result = "";
         // 2. Create a recStack vector to keep track of nodes in the current recursion path
 
         // 3. Iterate through all vertices
@@ -113,15 +116,15 @@ namespace ariel
             if (!visited[vertex])
             {
                 std::vector<int> recStack(g.getVertices(), false);
-                if (dfsCycleHelper(g, visited, recStack, vertex, (size_t)-1))
+                if (dfsCycleHelper(g, visited, recStack, vertex, (size_t)-1, result))
                 {
-                    std::cout << "true contains cycle";
+                    std::cout << result<<"\n"; // print the cycle
                     return true; // Cycle found found a back edge
                 }
             }
         }
         // 5. If no cycle found after iterating through all vertices, return false
-        std::cout << "false doesn't contain cycle";
+        // std::cout << "false doesn't contain cycle";
         return false;
     }
 
@@ -228,7 +231,6 @@ namespace ariel
                         // An edge from u to v exists and destination v is colored with same color as u
                         else if (g.getGraph()[u][v] !=0 && colorArr[v] == colorArr[u])
                         {
-                            std::cout<<"man"<<u<<"bruh"<<v<<"\n";
                             return "0";
                         }
                          

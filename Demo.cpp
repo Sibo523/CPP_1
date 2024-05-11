@@ -25,15 +25,15 @@ int main()
     // cout<<ariel::Algorithms::shortestPath(g,1,2)<<endl;
 
 
-    vector<vector<int>> graph1 = {
-        {0, 1, 2, 0, 0},
-        {1, 0, 0, 0, 0},
-        {2, 0, 0, 4, 0},
-        {0, 0, 4, 0, 5},
-        {0, 0, 0, 5, 0}};
-    g.loadGraph(graph1);
-    g.printGraph();
-    cout <<Algorithms::isBipartite(g)<<endl;
+    // vector<vector<int>> graph1 = {
+    //     {0, 1, 2, 0, 0},
+    //     {1, 0, 0, 0, 0},
+    //     {2, 0, 0, 4, 0},
+    //     {0, 0, 4, 0, 5},
+    //     {0, 0, 0, 5, 0}};
+    // g.loadGraph(graph1);
+    // g.printGraph();
+    // cout <<Algorithms::isBipartite(g)<<endl;
     // // CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3}");
     // // CHECK(ariel::Algorithms::shortestPath(g,1,0)=="1 -> 0 -> 2");
     // // 3x3 matrix that represents a connected graph.
@@ -50,19 +50,19 @@ int main()
     // cout << Algorithms::isBipartite(g) << endl;        // Should print: "The graph is bipartite: A={0, 2}, B={1}."
 
     // // 5x5 matrix that represents a non-connected graph with a cycle.
-    // vector<vector<int>> graph2 = {
-    //     {0, 1, 1, 0, 0},
-    //     {1, 0, 1, 0, 0},
-    //     {1, 1, 0, 1, 0},
-    //     {0, 0, 1, 0, 0},
-    //     {0, 0, 0, 0, 0}};
+    vector<vector<int>> graph2 = {
+        {0, 1, 1, 0, 0},
+        {1, 0, 1, 0, 0},
+        {1, 1, 0, 1, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0}};
 
-    // g.loadGraph(graph2); // Load the graph to the object.
+    g.loadGraph(graph2); // Load the graph to the object.
 
-    // g.printGraph();                                    // Should print: "Graph with 5 vertices and 8 edges."
+    g.printGraph();                                    // Should print: "Graph with 5 vertices and 8 edges."
     // cout << Algorithms::isConnected(g) << endl;        // Should print: "0" (false).
     // cout << Algorithms::shortestPath(g, 0, 4) << endl; // Should print: "-1" (there is no path between 0 and 4).
-    // cout << Algorithms::isContainsCycle(g) << endl;    // Should print: "The cycle is: 0->1->2->0".
+    cout << Algorithms::isContainsCycle(g) << endl;    // Should print: "The cycle is: 0->1->2->0".
     // cout << Algorithms::isBipartite(g) << endl;        // Should print: "0" (false).
 
     // // 5x5 matrix that reprsents a connected weighted graph.

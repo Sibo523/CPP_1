@@ -13,7 +13,7 @@ namespace ariel {
             static std::string isBipartite(Graph g);
             static bool negativeCycle(Graph g); 
         private:
-            static bool dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertexm, size_t parent);
+            static bool dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent, std::string &result);
             static void dfs(Graph g, std::vector<bool> &visited, size_t vertex);
             static void makeSymmetric(Graph &g);
             static std::string BelmanFord(Graph g, size_t srcm, size_t des);
@@ -21,4 +21,4 @@ namespace ariel {
     };
 }
 
-#endif // ALGORITHMS_HPP
+#endif //end of hpp
