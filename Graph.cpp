@@ -10,7 +10,7 @@ Graph::Graph() : numOfEdges(0), numOfVertices(0), directed(false) {
 }
 
 // Load graph from a 2D vector
-void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
+void Graph::loadGraph(const std::vector<std::vector<int>> vec1) {
     //might won't work  cause we never intilized numOfVertices
     if (!vec1.empty() &&  vec1.size() != vec1[0].size()) { // means that this is not a square matrix
         
@@ -41,7 +41,7 @@ void Graph::loadGraph(std::vector<std::vector<int>> vec1) {
 }
 
 // Print the graph
-void Graph::printGraph() {
+void Graph::printGraph() const{
     for (size_t i = 0; i < numOfVertices; ++i) {
         for (size_t j = 0; j < numOfVertices; ++j) {
             std::cout << vec[i][j] << " ";
@@ -52,20 +52,20 @@ void Graph::printGraph() {
 }
 
 // Get the number of vertices
-size_t Graph::getVertices() {
+size_t Graph::getVertices() const{
     return (size_t)numOfVertices;
 }
 
 // Get the number of edges
-size_t Graph::getEdges() {
+size_t Graph::getEdges()const {
     return (size_t)numOfEdges;
 }
 
 // Get the graph
-std::vector<std::vector<int>> Graph::getGraph() {
+std::vector<std::vector<int>> Graph::getGraph() const {
     return vec;
 }
-bool Graph::isDirected(){
+bool Graph::isDirected()const{
     return directed;
 }
 } // namespace ariel

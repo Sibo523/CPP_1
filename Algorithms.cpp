@@ -9,7 +9,7 @@ namespace ariel
     /**
      * need to fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!! might not work
      */
-    void Algorithms::dfs(Graph g, std::vector<bool> &visited, size_t vertex)
+    void Algorithms::dfs(const Graph &g, std::vector<bool> &visited, size_t vertex)
     {
         visited[vertex] = true; // Mark current vertex as visited
 
@@ -63,7 +63,7 @@ namespace ariel
         std::cout << "true ";
         return 1;
     }
-    bool Algorithms::dfsCycleHelper(Graph g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent, std::string &result)
+    bool Algorithms::dfsCycleHelper(const Graph &g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent, std::string &result)
     {
         // std::cout << "Visiting vertex: " << vertex << std::endl;
         visited[vertex] = true;
@@ -102,7 +102,7 @@ namespace ariel
         return false;
     }
 
-    bool Algorithms::isContainsCycle(Graph g)
+    bool Algorithms::isContainsCycle(const Graph &g)
     {
         // 1. Create a visited vector to keep track of visited nodes
         std::vector<bool> visited(g.getVertices(), false);
@@ -128,7 +128,7 @@ namespace ariel
         return false;
     }
 
-    std::string Algorithms::BelmanFord(Graph g, size_t src, size_t des)
+    std::string Algorithms::BelmanFord(const Graph &g, size_t src, size_t des)
     {
         // 1. Create a vector to store the shortest distances from the source vertex
         std::vector<int> dist(g.getVertices(), INT_MAX);
@@ -180,11 +180,10 @@ namespace ariel
 
         return result + std::to_string(src);
     }
-
+    // need to fix indents 
     // Function to find the shortest path between two vertices (Dijkstra's algorithm)
     std::string Algorithms::shortestPath(Graph g, size_t des, size_t src)
     {
-
         return BelmanFord(g, src, des);
     }
 

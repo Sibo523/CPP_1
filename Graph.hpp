@@ -12,12 +12,12 @@ class Graph{
         bool directed;
     public:
         Graph();
-        void loadGraph(std::vector<std::vector<int>> vec1);
-        void printGraph();
-        size_t getVertices();
-        size_t getEdges();
-        std::vector<std::vector<int>> getGraph();
-        bool isDirected();
+        void loadGraph(const std::vector<std::vector<int>> vec1);
+        void printGraph() const;
+        size_t getVertices() const;
+        size_t getEdges() const;
+        std::vector<std::vector<int>> getGraph() const;
+        bool isDirected() const;
 };
 }
 #endif //GRAPH_H
