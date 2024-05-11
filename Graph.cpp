@@ -10,7 +10,7 @@ Graph::Graph() : numOfEdges(0), numOfVertices(0), directed(false) {
 }
 
 // Load graph from a 2D vector
-void Graph::loadGraph(const std::vector<std::vector<int>> vec1) {
+void Graph::loadGraph(const std::vector<std::vector<int>> &vec1) {
     //might won't work  cause we never intilized numOfVertices
     if (!vec1.empty() &&  vec1.size() != vec1[0].size()) { // means that this is not a square matrix
         
@@ -46,9 +46,9 @@ void Graph::printGraph() const{
         for (size_t j = 0; j < numOfVertices; ++j) {
             std::cout << vec[i][j] << " ";
         }
-        std::cout << std::endl;
+        std::cout << "\n";
     }
-    std::cout<<"Graph with "<<numOfVertices<<" vertices and "<<numOfEdges<<" edges."<<std::endl;
+    std::cout<<"Graph with "<<numOfVertices<<" vertices and "<<numOfEdges<<" edges.\n";
 }
 
 // Get the number of vertices

@@ -12,7 +12,7 @@ class Graph{
         bool directed;
     public:
         Graph();
-        void loadGraph(const std::vector<std::vector<int>> vec1);
+        void loadGraph(const std::vector<std::vector<int>> &vec1);
         void printGraph() const;
         size_t getVertices() const;
         size_t getEdges() const;

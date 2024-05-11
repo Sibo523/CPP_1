@@ -40,7 +40,7 @@ namespace ariel
     {
         size_t V = g.getVertices(); // amount of vertirces 
         if (V == 0) {
-            return false;
+            return 0;
         }
         
         // 1. Create a visited vector to keep track of visited nodes
@@ -57,7 +57,7 @@ namespace ariel
         // 4. Check if all vertices are marked visited
         for (size_t i = 0; i < visited.size(); i++)
         {
-            if (visited[i] == false) // if one of them is false then the graph is not connected
+            if (!visited[i]) // if one of them is false then the graph is not connected
             {
                 std::cout << "false ";
                 return 0;
@@ -68,7 +68,7 @@ namespace ariel
         std::cout << "true ";
         return 1;
     }
-    bool Algorithms::dfsCycleHelper(const Graph &g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent, std::string &result)
+    bool Algorithms::dfsCycleHelper(const Graph &g, std::vector<bool> &visited, std::vector<bool> &recStack, size_t vertex, size_t parent, std::string &result)
     {
         // std::cout << "Visiting vertex: " << vertex << std::endl;
         visited[vertex] = true;
@@ -120,7 +120,7 @@ namespace ariel
             // 4. If the vertex is not visited, call DFS helper function
             if (!visited[vertex])
             {
-                std::vector<int> recStack(g.getVertices(), false);
+                std::vector<bool> recStack(g.getVertices(), false);
                 if (dfsCycleHelper(g, visited, recStack, vertex, (size_t)-1, result))
                 {
                     std::cout << result<<"\n"; // print the cycle
@@ -177,7 +177,7 @@ namespace ariel
 
         // 5. Return the shortest path from the source vertex to all other vertices
         // std::string result = "Shortest path from vertex " + std::to_string(src) + "to vertex "+std::to_string(des)+std::to_string(dist[des])+"\n";
-        std::string result = "";
+        std::string result;
         if (dist[des] == INT_MAX)
         {
             return "-1";
@@ -192,91 +192,72 @@ namespace ariel
     }
     // need to fix indents 
     // Function to find the shortest path between two vertices (Dijkstra's algorithm)
-    std::string Algorithms::shortestPath(Graph g, size_t des, size_t src)
+    std::string Algorithms::shortestPath(const Graph &g, size_t des, size_t src)
     {
         return BelmanFord(g, src, des);
     }
 
     // Function to check if a graph is bipartite (uses BFS)
-    std::string Algorithms::isBipartite(Graph g)
-    {
-        size_t V = g.getVertices(); // amount of vertirces 
+    bool Algorithms::isSelfLoop(const Graph &g, size_t u) {
+        return g.getGraph()[u][u] != 0;
+    }
+
+    bool Algorithms::isSameColor(const Graph &g, std::vector<int> &colorArr, size_t u, size_t v) {
+        return g.getGraph()[u][v] != 0 && colorArr[v] == colorArr[u];
+    }
+
+    bool Algorithms::isNotColored(const Graph &g, std::vector<int> &colorArr, size_t u, size_t v) {
+        return g.getGraph()[u][v] != 0 && colorArr[v] == -1;
+    }
+
+    std::string Algorithms::isBipartite(const Graph &g) {
+        size_t V = g.getVertices(); // amount of vertices 
         if (V == 0) {
             return "The graph is bipartite: A={}, B={}";
         }
-        // Create a color array to store colors assigned to vertices.
-        // Initialize all vertices as not colored (-1).
+
         std::vector<int> colorArr(V, -1);
+        std::queue<size_t> q;
 
-        // Process all vertices one by one
-        for (size_t i = 0; i < V; i++)
-        {
-            // If vertex is not colored, apply BFS on it.
-            if (colorArr[i] == -1)
-            {
-                std::queue<size_t> q;
-                q.push(i);
-                colorArr[i] = 1; // Color first vertex as 1.
+        for (size_t i = 0; i < V; i++) {
+            if (colorArr[i] != -1) {continue;}
 
-                // Run while there are vertices in queue
-                while (!q.empty())
-                {
-                    size_t u = q.front(); // sad that I can't pop into u :(
-                    q.pop();
+            q.push(i);
+            colorArr[i] = 1;
 
-                    // Return false if there is a self-loop
-                    if (g.getGraph()[u][u] != 0) {
-                        return "0";
-                    }
-                    // Find all non-colored adjacent vertices
-                    for (size_t v = 0; v < V; ++v)
-                    {
-                        // An edge from u to v exists and destination v is not colored
-                        if (g.getGraph()[u][v] != 0 && colorArr[v] == -1)
-                        {
-                            // Assign alternate color to this adjacent v of u
-                            colorArr[v] = 1 - colorArr[u];
-                            q.push(v);
-                        }
+            while (!q.empty()) {
+                size_t u = q.front();
+                q.pop();
 
-                        // An edge from u to v exists and destination v is colored with same color as u
-                        else if (g.getGraph()[u][v] !=0 && colorArr[v] == colorArr[u])
-                        {
-                            return "0";
-                        }
-                         
+                if (isSelfLoop(g, u)) {return "0";}
+
+                for (size_t v = 0; v < V; ++v) {
+                    if (isSameColor(g, colorArr, u, v)){ return "0";}
+                    if (isNotColored(g, colorArr, u, v)) {
+                        colorArr[v] = 1 - colorArr[u];
+                        q.push(v);
                     }
                 }
             }
         }
-        // this is A
-        std::string result= "The graph is bipartite: ";
-        result += "A={";
-        for (size_t i = 0; i < V; i++)
-        {
-            if (colorArr[i] == 0)
-            {
-                result += std::to_string(i) + " ";
-            }
+
+        std::string result = "The graph is bipartite: A={";
+        for (size_t i = 0; i < V; i++) {
+            if (colorArr[i] == 0) {result += std::to_string(i) + " ";}
         }
-        // this is B
+
         result += "}, B={";
-        for (size_t i = 0; i < V; i++)
-        {
-            if (colorArr[i] == 1)
-            {
-                result += std::to_string(i) + " ";
-            }
+        for (size_t i = 0; i < V; i++) {
+            if (colorArr[i] == 1) {result += std::to_string(i) + " ";}
         }
+
         result += "}";
-        // If we reach here, then all vertices can be colored with alternate color
         return result;
-    }
+    }//end of function
 
     // Function to check for a negative cycle in a weighted graph (Bellman-Ford)
-    bool Algorithms::negativeCycle(Graph g)
+    bool Algorithms::negativeCycle(const Graph &g)
     {
-
         return BelmanFord(g, 0, 0) == "Graph contains negative weight cycle";
     }
 
