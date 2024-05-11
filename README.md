@@ -4,48 +4,52 @@
 - *Email:* roisi20041@gmail.com
 # Algorithms
 
-This header file defines the `Algorithms` class within the `ariel` namespace, providing a collection of static methods for graph-related operations. The class is designed to work with the `Graph` class, which should be defined elsewhere in your project. The `Algorithms` class offers functionalities such as checking if a graph is connected, detecting cycles, finding the shortest path between nodes, determining if a graph is bipartite, and identifying negative cycles.
+This header file defines the `Algorithms` class within the `ariel` namespace, offering a suite of static methods for performing various graph-related operations. The class is designed to complement the `Graph` class, providing functionalities such as connectivity checks, cycle detection, shortest path calculations, bipartiteness determination, and negative cycle identification.
+
+## Class Overview
+
+The `Algorithms` class encapsulates a collection of static methods that operate on instances of the `Graph` class. These methods leverage graph theory concepts to solve common problems in graph analysis and manipulation.
 
 ## Public Methods
 
 ### `isConnected(Graph g)`
 
-- **Description**: Checks if the given graph `g` is connected. used dfs and asures that you got to all vertices
+- **Description**: Checks if the given graph `g` is connected.
 - **Return Type**: `int`
 - **Parameters**: A reference to a `Graph` object `g`.
 - **Usage**: To determine if all nodes in the graph are reachable from each other.
 
 ### `isContainsCycle(const Graph &g)`
 
-- **Description**: Determines if the graph `g` contains a cycle. uses dfs helper
+- **Description**: Determines if the graph `g` contains a cycle.
 - **Return Type**: `bool`
 - **Parameters**: A constant reference to a `Graph` object `g`.
 - **Usage**: To check for the presence of a cycle in the graph.
 
-### `shortestPath(Graph g, size_t des, size_t src)`
+### `shortestPath(const Graph &g, size_t des, size_t src)`
 
-- **Description**: Finds the shortest path between the source node `src` and the destination node `des` in the graph `g`.will always return false if you give it undirected graph with negative weights.
+- **Description**: Finds the shortest path between the source node `src` and the destination node `des` in the graph `g`.
 - **Return Type**: `std::string`
-- **Parameters**: A `Graph` object `g`, and two `size_t` values representing the source and destination nodes.
+- **Parameters**: A constant reference to a `Graph` object `g`, and two `size_t` values representing the source and destination nodes.
 - **Usage**: To find the shortest path between two nodes in the graph.
 
-### `isBipartite(Graph g)`
+### `isBipartite(const Graph &g)`
 
 - **Description**: Checks if the graph `g` is bipartite.
 - **Return Type**: `std::string`
-- **Parameters**: A `Graph` object `g`.
+- **Parameters**: A constant reference to a `Graph` object `g`.
 - **Usage**: To determine if the graph can be divided into two disjoint sets where every edge connects a node in one set to a node in the other set.
 
-### `negativeCycle(Graph g)`
+### `negativeCycle(const Graph &g)`
 
 - **Description**: Identifies if the graph `g` contains a negative cycle.
 - **Return Type**: `bool`
-- **Parameters**: A `Graph` object `g`.
+- **Parameters**: A constant reference to a `Graph` object `g`.
 - **Usage**: To detect the presence of a negative cycle in the graph.
 
 ## Private Methods
 
-### `dfsCycleHelper(const Graph &g, std::vector<bool> &visited, std::vector<int> &recStack, size_t vertex, size_t parent, std::string &result)`
+### `dfsCycleHelper(const Graph &g, std::vector<bool> &visited, std::vector<bool> &recStack, size_t vertex, size_t parent, std::string &result)`
 
 - **Description**: Helper method for depth-first search (DFS) to detect cycles.
 - **Return Type**: `bool`
@@ -66,6 +70,27 @@ This header file defines the `Algorithms` class within the `ariel` namespace, pr
 - **Parameters**: A reference to a `Graph` object `g`.
 - **Usage**: Ensures that the graph is fully connected by adding any missing edges.
 
+### `isSameColor(const Graph &g, std::vector<int> &colorArr, size_t u, size_t v)`
+
+- **Description**: Checks if two nodes have the same color in a colored graph.
+- **Return Type**: `bool`
+- **Parameters**: A constant reference to a `Graph` object `g`, a vector of colors, and two node indices `u` and `v`.
+- **Usage**: Used internally for bipartiteness checks.
+
+### `isSelfLoop(const Graph &g, size_t u)`
+
+- **Description**: Checks if a node has a self-loop in the graph.
+- **Return Type**: `bool`
+- **Parameters**: A constant reference to a `Graph` object `g` and a node index `u`.
+- **Usage**: Used internally for certain graph validations.
+
+### `isNotColored(const Graph &g, std::vector<int> &colorArr, size_t u, size_t v)`
+
+- **Description**: Checks if two nodes are not colored in a colored graph.
+- **Return Type**: `bool`
+- **Parameters**: A constant reference to a `Graph` object `g`, a vector of colors, and two node indices `u` and `v`.
+- **Usage**: Used internally for bipartiteness checks.
+
 ### `BelmanFord(const Graph &g, size_t srcm, size_t des)`
 
 - **Description**: Implements the Bellman-Ford algorithm to find the shortest path between `srcm` and `des` in the graph `g`.
@@ -73,7 +98,8 @@ This header file defines the `Algorithms` class within the `ariel` namespace, pr
 - **Parameters**: A constant reference to a `Graph` object `g`, and two `size_t` values representing the source and destination nodes.
 - **Usage**: To find the shortest path between two nodes using the Bellman-Ford algorithm.
 
-# Ariel Graph Header File
+
+# Graph
 
 This header file defines the `Graph` class within the `ariel` namespace, providing a flexible and efficient way to represent and manipulate graphs. The `Graph` class supports both directed and undirected graphs, allowing for a wide range of graph-based applications.
 
@@ -117,6 +143,6 @@ This example demonstrates creating a directed graph with 4 vertices and 4 edges,
 
 The `Graph` class provides a solid foundation for graph-based algorithms and data structures, making it easy to implement complex graph operations and algorithms.
 
-### `I used phind in order to create this readme`
+### `P.S:I got help for phind to create this readme`
  
 
