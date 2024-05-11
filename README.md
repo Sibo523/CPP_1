@@ -1,4 +1,8 @@
-# Ariel Algorithms Header File
+### Personal Details
+- *ID:* 214662439
+- *Name:* Roi Sibony
+- *Email:* roisi20041@gmail.com
+# Algorithms
 
 This header file defines the `Algorithms` class within the `ariel` namespace, providing a collection of static methods for graph-related operations. The class is designed to work with the `Graph` class, which should be defined elsewhere in your project. The `Algorithms` class offers functionalities such as checking if a graph is connected, detecting cycles, finding the shortest path between nodes, determining if a graph is bipartite, and identifying negative cycles.
 
@@ -6,21 +10,21 @@ This header file defines the `Algorithms` class within the `ariel` namespace, pr
 
 ### `isConnected(Graph g)`
 
-- **Description**: Checks if the given graph `g` is connected.
+- **Description**: Checks if the given graph `g` is connected. used dfs and asures that you got to all vertices
 - **Return Type**: `int`
 - **Parameters**: A reference to a `Graph` object `g`.
 - **Usage**: To determine if all nodes in the graph are reachable from each other.
 
 ### `isContainsCycle(const Graph &g)`
 
-- **Description**: Determines if the graph `g` contains a cycle.
+- **Description**: Determines if the graph `g` contains a cycle. uses dfs helper
 - **Return Type**: `bool`
 - **Parameters**: A constant reference to a `Graph` object `g`.
 - **Usage**: To check for the presence of a cycle in the graph.
 
 ### `shortestPath(Graph g, size_t des, size_t src)`
 
-- **Description**: Finds the shortest path between the source node `src` and the destination node `des` in the graph `g`.
+- **Description**: Finds the shortest path between the source node `src` and the destination node `des` in the graph `g`.will always return false if you give it undirected graph with negative weights.
 - **Return Type**: `std::string`
 - **Parameters**: A `Graph` object `g`, and two `size_t` values representing the source and destination nodes.
 - **Usage**: To find the shortest path between two nodes in the graph.
@@ -79,14 +83,15 @@ The `Graph` class encapsulates the structure and operations of a graph. It inclu
 
 ## Class Members
 
-### Private Members
+### `Public methods`
 
 - `numOfEdges`: Stores the number of edges in the graph.
 - `vec`: A 2D vector representing the adjacency matrix of the graph.
 - `numOfVertices`: Stores the number of vertices in the graph.
 - `directed`: A boolean flag indicating whether the graph is directed.
 
-### Public Members
+
+### `Public members`
 
 - `Graph()`: Default constructor initializes an empty graph.
 - `loadGraph(const std::vector<std::vector<int>> vec1)`: Loads the graph from a 2D vector representation.
@@ -100,3 +105,17 @@ The `Graph` class encapsulates the structure and operations of a graph. It inclu
 
 To use the `Graph` class, you need to include the header file in your source code and create instances of the `Graph` class. Here's a simple example demonstrating how to create a graph, add edges, and print it:
 
+// Adding edges to the graph
+graph.loadGraph({{0, 1}, {1, 2}, {2, 3}, {3, 0}}); // Creates a directed graph with 4 vertices and 4 edges
+// Printing the graph
+graph.printGraph();
+return 0;
+
+
+
+This example demonstrates creating a directed graph with 4 vertices and 4 edges, then printing the graph to the console. The `loadGraph` method is used to populate the graph with edges, and `printGraph` displays the graph's structure.
+
+The `Graph` class provides a solid foundation for graph-based algorithms and data structures, making it easy to implement complex graph operations and algorithms.
+
+
+I got help phind.com to create this readme.md
