@@ -1,3 +1,8 @@
+/**
+ * Roi Sibony
+ * 214662439
+ * roisi20041@gmail.com
+*/
 #ifndef ALGORITHMS_HPP
 #define ALGORITHMS_HPP
 
