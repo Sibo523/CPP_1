@@ -45,17 +45,17 @@ namespace ariel
             return 0;
         }
         
-        // 1. Create a visited vector to keep track of visited nodes
+        // Create a visited vector to keep track of visited nodes
         std::vector<bool> visited((size_t)g.getVertices(), false);
 
-        // 2. Choose any starting vertex (here we choose the first vertex just because)
+        // Choose any starting vertex (here we choose the first vertex just because)
         size_t start = 0;
 
-        // 3. Perform DFS traversal starting from the chosen vertex
+        // Perform DFS traversal starting from the chosen vertex
         makeSymmetric(g);       // now we have symmetring graph so when we will do dfs if the graph is connected we will get to everyone else not
         dfs(g, visited, start); // we will dfs, if we can reach all the vertices then the graph is connected
 
-        // 4. Check if all vertices are marked visited
+        // Check if all vertices are marked visited
         for (size_t i = 0; i < visited.size(); i++)
         {
             if (!visited[i]) // if one of them is false then the graph is not connected
@@ -65,7 +65,7 @@ namespace ariel
             }
         }
 
-        // 5. If all vertices are visited, the graph is connected
+        // If all vertices are visited, the graph is connected
         // std::cout << "true "; //used for debugging
         return 1;
     }
@@ -111,15 +111,15 @@ namespace ariel
     //public function, dfs's from the every vertex and checks if there is a cycle
     bool Algorithms::isContainsCycle(const Graph &g)
     {
-        // 1. Create a visited vector to keep track of visited nodes
+        // Create a visited vector to keep track of visited nodes
         std::vector<bool> visited(g.getVertices(), false);
         std::string result = "";
-        // 2. Create a recStack vector to keep track of nodes in the current recursion path
+        // Create a recStack vector to keep track of nodes in the current recursion path
 
-        // 3. Iterate through all vertices
+        // Iterate through all vertices
         for (size_t vertex = 0; vertex < g.getVertices(); ++vertex)
         {
-            // 4. If the vertex is not visited, call DFS helper function
+            // If the vertex is not visited, call DFS helper function
             if (!visited[vertex])
             {
                 std::vector<bool> recStack(g.getVertices(), false);
@@ -130,7 +130,7 @@ namespace ariel
                 }
             }
         }
-        // 5. If no cycle found after iterating through all vertices, return false
+        // If no cycle found after iterating through all vertices, return false
         // std::cout << "false doesn't contain cycle";
         return false;
     }
@@ -143,13 +143,13 @@ namespace ariel
             return "Empty graph";
         }
         
-        // 1. Create a vector to store the shortest distances from the source vertex
+        // Create a vector to store the shortest distances from the source vertex
         std::vector<int> dist(g.getVertices(), INT_MAX);
         std::vector<int> parent(g.getVertices(), -1);
-        // 2. Set the distance of the source vertex to itself as 0
+        // Set the distance of the source vertex to itself as 0
         dist[src] = 0;
 
-        // 3. Relax edges repeatedly to find the shortest path
+        // Relax edges repeatedly to find the shortest path
         for (size_t i = 0; i < g.getVertices() - 1; ++i)
         {
             // Iterate through all edges and update the distance if a shorter path is found
@@ -166,7 +166,7 @@ namespace ariel
             }
         }
 
-        // 4. Check for negative weight cycles
+        // Check for negative weight cycles
         for (size_t u = 0; u < g.getVertices(); ++u)
         {
             for (size_t v = 0; v < g.getVertices(); ++v)
@@ -178,7 +178,7 @@ namespace ariel
             }
         }
 
-        // 5. Return the shortest path from the source vertex to all other vertices
+        //  Return the shortest path from the source vertex to all other vertices
         std::string result;
         if (dist[des] == INT_MAX)
         {
@@ -220,10 +220,10 @@ namespace ariel
 
         std::vector<int> colorArr(V, -1);
         std::queue<size_t> q;
-
+        //   Start BFS from the first vertex
         for (size_t i = 0; i < V; i++) {
             if (colorArr[i] != -1) {continue;}
-
+            //  Color the first vertex as 1
             q.push(i);
             colorArr[i] = 1;
 
