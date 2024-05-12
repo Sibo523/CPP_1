@@ -1,6 +1,5 @@
 /**
  * Roi Sibony
- * 214662439
  * roisi20041@gmail.com
 */
 #include "Algorithms.hpp"
@@ -9,9 +8,8 @@
 
 namespace ariel
 {
-
+    //my definetion for connected is that there's no vertext that isn't touched by other vertexes in a component
     // standard dfs algorithm
-
     void Algorithms::dfs(const Graph &g, std::vector<bool> &visited, size_t vertex)
     {
         visited[vertex] = true; // Mark current vertex as visited
@@ -137,6 +135,7 @@ namespace ariel
         return false;
     }
     // Function to find the shortest path between two vertices (Bellman-Ford algorithm)
+    // if there's somewhere in teh graph negative cycle we will return that there's a negative cycle even if reach it
     std::string Algorithms::BelmanFord(const Graph &g, size_t src, size_t des)
     {
         size_t V = g.getVertices(); // amount of vertirces 
