@@ -5,10 +5,8 @@
 namespace ariel
 {
 
-    // Function to check if a graph is connected (uses DFS)
-    /**
-     * need to fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!! might not work
-     */
+    // standard dfs algorithm
+
     void Algorithms::dfs(const Graph &g, std::vector<bool> &visited, size_t vertex)
     {
         visited[vertex] = true; // Mark current vertex as visited
@@ -22,6 +20,7 @@ namespace ariel
             }
         }
     }
+    // create missing edges
     void Algorithms::makeSymmetric(Graph &g)
     {
         for (size_t i = 0; i < g.getVertices(); ++i)
@@ -35,7 +34,7 @@ namespace ariel
             }
         }
     }
-
+    // public function, checks if the graph is connected (not strongly connected, just connected)
     int Algorithms::isConnected(Graph g)
     {
         size_t V = g.getVertices(); // amount of vertirces 
@@ -50,7 +49,6 @@ namespace ariel
         size_t start = 0;
 
         // 3. Perform DFS traversal starting from the chosen vertex
-        // we will see that g is sent by value
         makeSymmetric(g);       // now we have symmetring graph so when we will do dfs if the graph is connected we will get to everyone else not
         dfs(g, visited, start); // we will dfs, if we can reach all the vertices then the graph is connected
 
@@ -59,15 +57,16 @@ namespace ariel
         {
             if (!visited[i]) // if one of them is false then the graph is not connected
             {
-                std::cout << "false ";
+                // std::cout << "false "; //used for debugging
                 return 0;
             }
         }
 
         // 5. If all vertices are visited, the graph is connected
-        std::cout << "true ";
+        // std::cout << "true "; //used for debugging
         return 1;
     }
+    // public function, checks if there is a back edge,in the end stores all the vertexes of the cycle in reslut
     bool Algorithms::dfsCycleHelper(const Graph &g, std::vector<bool> &visited, std::vector<bool> &recStack, size_t vertex, size_t parent, std::string &result)
     {
         // std::cout << "Visiting vertex: " << vertex << std::endl;
@@ -106,7 +105,7 @@ namespace ariel
         // std::cout << "Backtracking from vertex: " << vertex << std::endl; // used for debugging
         return false;
     }
-
+    //public function, dfs's from the every vertex and checks if there is a cycle
     bool Algorithms::isContainsCycle(const Graph &g)
     {
         // 1. Create a visited vector to keep track of visited nodes
@@ -132,11 +131,11 @@ namespace ariel
         // std::cout << "false doesn't contain cycle";
         return false;
     }
-
+    // Function to find the shortest path between two vertices (Bellman-Ford algorithm)
     std::string Algorithms::BelmanFord(const Graph &g, size_t src, size_t des)
     {
         size_t V = g.getVertices(); // amount of vertirces 
-        if (V == 0) {
+        if (V == 0) { 
             return "Empty graph";
         }
         
@@ -176,7 +175,6 @@ namespace ariel
         }
 
         // 5. Return the shortest path from the source vertex to all other vertices
-        // std::string result = "Shortest path from vertex " + std::to_string(src) + "to vertex "+std::to_string(des)+std::to_string(dist[des])+"\n";
         std::string result;
         if (dist[des] == INT_MAX)
         {
@@ -190,11 +188,11 @@ namespace ariel
 
         return result + std::to_string(src);
     }
-    // need to fix indents 
+    
     // Function to find the shortest path between two vertices (Dijkstra's algorithm)
     std::string Algorithms::shortestPath(const Graph &g, size_t des, size_t src)
     {
-        return BelmanFord(g, src, des);
+        return BelmanFord(g, src, des); //BF
     }
 
     // Function to check if a graph is bipartite (uses BFS)
@@ -258,7 +256,7 @@ namespace ariel
     // Function to check for a negative cycle in a weighted graph (Bellman-Ford)
     bool Algorithms::negativeCycle(const Graph &g)
     {
-        return BelmanFord(g, 0, 0) == "Graph contains negative weight cycle";
+        return BelmanFord(g, 0, 0) == "Graph contains negative weight cycle"; // in BelmanFord we check for negative cycless
     }
 
 } // namespace ariel
