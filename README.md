@@ -17,8 +17,9 @@ Before you begin, ensure you have met the following requirements:
 The project uses a Makefile to automate the build process. Here are the main commands available:
 
 - `make`: Builds the project.
-- `make run`: makes the demo exe.
+- `make demo`: makes the demo exee
 - `make test`: makes the test.
+- `make run`: runs the demo exe (need to use after making the demo).
 - `make tidy`: Runs clang-tidy on the source files to check for common issues.
 - `make valgrind`: Runs Valgrind on both the demo and test executables to check for memory leaks.
 - `make clean`: Cleans up the build artifacts by removing object files and executables.

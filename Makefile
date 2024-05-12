@@ -8,6 +8,7 @@ SOURCES=Graph.cpp Algorithms.cpp
 OBJECTS=$(subst .cpp,.o,$(SOURCES))
 
 all: demo test
+
 run: demo
 	./$^
 
