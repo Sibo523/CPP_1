@@ -2,9 +2,36 @@
 - *ID:* in txt file
 - *Name:* Roi Sibony
 - *Email:* roisi20041@gmail.com
+
+# CPP_1
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- You have installed the latest version of Clang++ compiler.
+- You have a basic understanding of C++ programming.
+
+## Makefile Commands
+
+The project uses a Makefile to automate the build process. Here are the main commands available:
+
+- `make`: Builds the project.
+- `make run`: makes the demo exe.
+- `make test`: makes the test.
+- `make tidy`: Runs clang-tidy on the source files to check for common issues.
+- `make valgrind`: Runs Valgrind on both the demo and test executables to check for memory leaks.
+- `make clean`: Cleans up the build artifacts by removing object files and executables.
+
+
+## How to run the program
+- `./demo`: runs the demo exe file.
+- `./test`: Runs the test exe file.
+
 # Algorithms
 
-This header file defines the `Algorithms` class within the `ariel` namespace, offering a suite of static methods for performing various graph-related operations. The class is designed to complement the `Graph` class, providing functionalities such as connectivity checks, cycle detection, shortest path calculations, bipartiteness determination, and negative cycle identification.
+`Algorithms` class withing the `ariel` namespace, offering a suite of static Algorithms that can be applied on the Graph object.
+The funtions withing this file, checks connectivity, cycle detetion, shortest path calculation, bipartitennes groups and negative cycle determention.
 
 ## Class Overview
 
@@ -101,7 +128,7 @@ The `Algorithms` class encapsulates a collection of static methods that operate 
 
 # Graph
 
-This header file defines the `Graph` class within the `ariel` namespace, providing a flexible and efficient way to represent and manipulate graphs. The `Graph` class supports both directed and undirected graphs, allowing for a wide range of graph-based applications.
+`Graph` class withing the `ariel` namespace, providing simple implemantion of adjancacy matriix to represent a Graph.
 
 ## Class Overview
 
