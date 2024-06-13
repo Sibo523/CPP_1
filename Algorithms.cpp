@@ -262,5 +262,34 @@ namespace ariel
     {
         return BelmanFord(g, 0, 0) == "Graph contains negative weight cycle"; // in BelmanFord we check for negative cycless
     }
+}// namespace ariel
 
-} // namespace ariel
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    /*
+                std::vector<size_t> parent(g.getVertices(), INT_MAX);
+        size_t i = 0;
+        if( BelmanFord(g, 0, 0,parent,i) == "Graph contains negative weight cycle"){
+            size_t j = i;
+            std::cout<<i<<" ";
+            i = parent[i];
+            while(i != j){
+                std::cout<<i<<" ";
+                i = parent[i];
+            }
+            return true;
+        } // in BelmanFord we check for negative cycless
+        return false;
+    */
+// } // namespace ariel
